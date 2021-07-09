@@ -366,11 +366,13 @@ contains
          case ('sw') ! do a shortwave heating calc this timestep?
             radiation_do = nstep == 0 .or. iradsw == 1                     &
                           .or. (mod(nstep-1,iradsw) == 0 .and. nstep /= 1) &
-                          .or. nstep <= irad_always
+                          .or. nstep <= irad_always                        &
+                          .and. .not.swrad_off
          case ('lw') ! do a longwave heating calc this timestep?
             radiation_do = nstep == 0 .or. iradlw == 1                     &
                           .or. (mod(nstep-1,iradlw) == 0 .and. nstep /= 1) &
-                          .or. nstep <= irad_always
+                          .or. nstep <= irad_always                        &
+                          .and. .not.lwrad_off
          case default
             call endrun('radiation_do: unknown operation:'//op)
       end select
